@@ -1,8 +1,8 @@
 total_sim_time=5e5; %simulation time
-p=1/N; %transmission threshold
 
 % step 1
-for N = [20 50 70]
+for N = [10 20 30 40 50 60 70 80 90]
+    p=1/N; %transmission threshold
     total_success=zeros(1, N); %array to record number of packets successfully sent
 
     % Initialize the counter for current node receiving the transmission.
@@ -35,7 +35,8 @@ hold off;
 figure;
 % At least one packet will arrive at each node every D unit times
 D = 50;
-for N = [20 50 70]
+for N = [20 30 40 50 60 70 80 90]
+    p=1/N; %transmission threshold
     total_success=zeros(1, N); %array to record number of packets successfully sent
     total_fail= zeros(1, N);
     receiver = zeros(1, N);
@@ -60,7 +61,7 @@ for N = [20 50 70]
         end
     end
 
-    G = sum(total_success)/ (total_sim_time);
+    G = sum(total_success)/ (total_sim_time / D);
     plot(N, G, 'bo:');
     title('Slotted AlOHA');
     xlabel('Number of nodes');
@@ -81,7 +82,8 @@ figure; % allow for another plot
 
 total_packets = 0;
 % At least one packet will arrive at each node every D unit times
-for N = 20
+for N = [20 30 40 50 60 70 80 90]
+    p=1/(2*N); %transmission threshold
     total_success=zeros(1, N); %array to record number of packets successfully sent
     total_fail= zeros(1, N);
     receiver = zeros(1, N);
@@ -129,16 +131,14 @@ for N = 20
     end
 
     % Calculate the percentage of packets received.
-    S = (sum(total_success)/ sum(total_packets)) * 100;
-    plot(N, S, 'bo:');
+    G = (sum(total_success)/ (total_sim_time / D ));
+    plot(N, G, 'bo:');
     title('Slotted AlOHA');
     xlabel('Number of nodes');
-    ylabel('% Packets Received');
+    ylabel('Throughput');
     % set the plot to scale to the data.
     axis auto;
-    % set the domain.
     xlim([0 100]);
-    ylim([0 100]);
     hold on;
 end
 
@@ -148,7 +148,8 @@ end
 total_fail = zeros(1, N);
 total_packets = 0;
 % At least one packet will arrive at each node every D unit times
-for N = 20
+for N = [20 30 40 50 60 70 80 90]
+    p=1/(2*N); %transmission threshold
     total_success=zeros(1, N); %array to record number of packets successfully sent
     total_fail= zeros(1, N);
     receiver = zeros(1, N);
@@ -196,7 +197,7 @@ for N = 20
         end
     end
 
-    S = (sum(total_success)/ sum(total_packets)) * 100;
-    plot(N, S, 'ro:');
+    G = (sum(total_success)/ (total_sim_time / D ));
+    plot(N, G, 'ro:');
 end
 hold off;
